@@ -16,21 +16,16 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
 
   // Search fields
-  search: SearchItem;
+  searchItem: SearchItem = new SearchItem();
   results: Book[] = [];
   previous: any = [];
 
-  private loading = false;
   constructor(private cdRef: ChangeDetectorRef, public restApi: RestApiService) { }
 
-  ngOnInit() {
-    const example: SearchItem = new SearchItem('Prince');
-    this.searchBooks(example);
-  }
+  ngOnInit() { }
 
   // Get books list
- async searchBooks(input: SearchItem) {
-   this.loading = true;
+ async complexBooks(input: SearchItem) {
    const promise = this.restApi.search(input.searchTerm());
    await promise.then( (res: []) => {
      res.map((item: Book) => {
@@ -44,10 +39,29 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
    this.previous = this.mdbTable.getDataSource();
 }
 
-ngAfterViewInit() {
-this.mdbTablePagination.setMaxVisibleItemsNumberTo(15);
-this.mdbTablePagination.calculateFirstItemIndex();
-this.mdbTablePagination.calculateLastItemIndex();
-this.cdRef.detectChanges();
-}
+  async search(input: string) {
+    const promise = this.restApi.search(input);
+    await promise.then( (res: []) => {
+        res.map((item: Book) => {
+          this.results.push(new Book(item.author_name, item.title, item.first_publish_year));
+        });
+      }
+    );
+    console.log(this.results);
+    this.mdbTable.setDataSource(this.results);
+    this.results = this.mdbTable.getDataSource();
+    this.previous = this.mdbTable.getDataSource();
+  }
+
+  ngAfterViewInit() {
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(15);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
+  }
+
+  simpleSearch(value: string, s: string) {
+    this.results = [];
+    this.search(value + '=' + s.replace(/ /g, '+'));
+  }
 }

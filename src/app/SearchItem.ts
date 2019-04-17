@@ -18,17 +18,20 @@ export class SearchItem {
     }
 
     if (this.author !== '') {
-      term += '&' + this.author;
+      if (term !== '') { term += '&'; }
+      term += 'author=' + this.author;
     }
 
     if (this.title !== '') {
-      term += '&' + this.title;
+      if (term !== '') { term += '&'; }
+      term += 'title=' + this.title;
     }
 
     if (this.isbn !== '') {
-      term += '&' + this.isbn;
+      if (term !== '') { term += '&'; }
+      term += 'isbn=' + this.isbn;
     }
-    console.log(term);
+    // console.log(term);
     return term;
   }
 }
