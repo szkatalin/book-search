@@ -24,27 +24,31 @@
       </div>
       <div class="col-4"><input mdbInput type="text" class="form-control" #simple_search></div>
       <div class="col-2">Keywords</div>
-      <div class="col-4"><input mdbInput type="text" class="form-control" id="keywords_complex"></div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" #keywords_complex></div>
     </div>
     <div class="row" style="padding-top: 20px">
       <div class="col-4"></div>
       <div class="col-2"><button mdbBtn type="button" color="info" rounded="true" mdbWavesEffect style="border-radius: 20px" (click)="simpleSearch(option.value, simple_search.value)">Search</button></div>
       <div class="col-2">Author</div>
-      <div class="col-4"><input mdbInput type="text" class="form-control" id="author"></div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" #author></div>
     </div>
     <div class="row">
       <div class="col-6"></div>
       <div class="col-2">Title</div>
-      <div class="col-4"><input mdbInput type="text" class="form-control" id="title"></div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" #title></div>
     </div>
     <div class="row" style="padding-top: 20px">
       <div class="col-6"></div>
       <div class="col-2">ISBN(s)</div>
-      <div class="col-4"><input mdbInput type="text" class="form-control" id="isbn"></div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" #isbn></div>
     </div>
     <div class="row" style="padding-top: 20px">
       <div class="col-10"></div>
-      <div class="col-2"><button mdbBtn type="button" color="info" rounded="true" mdbWavesEffect style="border-radius: 20px">Search</button></div>
+      <div class="col-2"><button mdbBtn type="button"
+                                 color="info" rounded="true"
+                                 mdbWavesEffect style="border-radius: 20px"
+                                 (click)="complexSearch(keywords_complex.value, author.value, title.value, isbn.value)">
+        Search</button></div>
     </div>
 
   </div>

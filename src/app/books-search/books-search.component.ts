@@ -25,7 +25,7 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
   ngOnInit() { }
 
   // Get books list
- async complexBooks(input: SearchItem) {
+ async complexBookSearch(input: SearchItem) {
    const promise = this.restApi.search(input.searchTerm());
    await promise.then( (res: []) => {
      res.map((item: Book) => {
@@ -63,5 +63,16 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
   simpleSearch(value: string, s: string) {
     this.results = [];
     this.search(value + '=' + s.replace(/ /g, '+'));
+  }
+
+  complexSearch(k: string, a: string, t: string, i: string) {
+    this.results = [];
+
+    this.searchItem.keywords = k;
+    this.searchItem.author = a;
+    this.searchItem.title = t;
+    this.searchItem.isbn = i;
+
+    this.complexBookSearch(this.searchItem);
   }
 }
