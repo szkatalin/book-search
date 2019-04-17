@@ -8,8 +8,47 @@
     <h1 class="display-7">Search</h1>
     <p class="lead">Here is the search form, you can search in various forms.</p>
     <hr class="my-4">
+    <div class="row" style="padding-bottom: 10px">
+      <div class="col-6">Simple Search</div>
+      <div class="col-6">Complex Search</div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <select class="browser-default custom-select">
+          <option selected>keyword</option>
+          <option value="1">author</option>
+          <option value="2">title</option>
+          <option value="3">ISBN</option>
+          <option value="4">subject</option>
+        </select>
+      </div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" id="select_search"></div>
+      <div class="col-2">Keywords</div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" id="keywords_complex"></div>
+    </div>
+    <div class="row" style="padding-top: 20px">
+      <div class="col-4"></div>
+      <div class="col-2"><button mdbBtn type="button" color="info" rounded="true" mdbWavesEffect style="border-radius: 20px">Search</button></div>
+      <div class="col-2">Author</div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" id="author"></div>
+    </div>
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-2">Title</div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" id="title"></div>
+    </div>
+    <div class="row" style="padding-top: 20px">
+      <div class="col-6"></div>
+      <div class="col-2">ISBN(s)</div>
+      <div class="col-4"><input mdbInput type="text" class="form-control" id="isbn"></div>
+    </div>
+    <div class="row" style="padding-top: 20px">
+      <div class="col-10"></div>
+      <div class="col-2"><button mdbBtn type="button" color="info" rounded="true" mdbWavesEffect style="border-radius: 20px">Search</button></div>
+    </div>
 
   </div>
+
 
 <!--TÁBLÁZAT EREDMÉNY-->
 
@@ -23,18 +62,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let el of elements; let i = index">
+    <tr *ngFor="let el of results; let i = index">
       <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{i+1}}</th>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.author_name}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.title}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.first_publish_year}}</td>
-      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{'like'}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a href="#">{{'❤️'}}</a></td>
     </tr>
     </tbody>
     <tfoot class="grey lighten-5 w-100">
     <tr>
       <td colspan="5">
-        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="results"></mdb-table-pagination>
       </td>
     </tr>
     </tfoot>

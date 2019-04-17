@@ -19,20 +19,20 @@ export class RestApiService {
 
   search(term: string) {
     return new Promise((resolve, reject) => {
-      const api = `${this.apiURL}?author=tolkien`;
+      const api = `${this.apiURL}?${term}`;
       this.http.get(api)
         .toPromise()
         .then(
           (res: any) => {
-            console.log(res.docs);
-            this.results = res.docs.map(item => {
+            // console.log(res.docs);
+            /*this.results = res.docs.map(item => {
               return new Book(
                 item.author_name[0],
                 item.title,
                 item.first_publish_year
               );
-            });
-            resolve(this.results);
+            });*/
+            resolve(res.docs);
           },
           msg => {
             reject(msg);

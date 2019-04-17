@@ -2,6 +2,7 @@ import {MdbTableDirective, MdbTablePaginationComponent} from 'angular-bootstrap-
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {RestApiService} from '../shared/rest-api.service';
 import {Book} from '../shared/book';
+import {SearchItem} from '../SearchItem';
 
 @Component({
   selector: 'app-books-search',
@@ -9,34 +10,44 @@ import {Book} from '../shared/book';
   styleUrls: ['./books-search.component.scss']
 })
 export class BooksSearchComponent implements OnInit, AfterViewInit {
+  // Table
+  headElements = ['id', 'Author', 'Title', 'Published', 'Like'];
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  elements: Book[] = [];
+
+  // Search fields
+  search: SearchItem;
+  results: Book[] = [];
   previous: any = [];
-  headElements = ['id', 'Author', 'Title', 'Published', 'Favourite'];
+
   private loading = false;
   constructor(private cdRef: ChangeDetectorRef, public restApi: RestApiService) { }
 
   ngOnInit() {
-    // this.loadBooks('author=Tolkien');
+    const example: SearchItem = new SearchItem('Prince');
+    this.searchBooks(example);
   }
 
   // Get books list
- async loadBooks(input: string) {
+ async searchBooks(input: SearchItem) {
    this.loading = true;
-   // @ts-ignore
-   const promise = this.restApi.search(' ').then(this.loading = false);
-   this.elements = await promise;
-
-   this.mdbTable.setDataSource(this.elements);
-   this.elements = this.mdbTable.getDataSource();
+   const promise = this.restApi.search(input.searchTerm());
+   await promise.then( (res: []) => {
+     res.map((item: Book) => {
+       this.results.push(new Book(item.author_name, item.title, item.first_publish_year));
+     });
+     }
+   );
+   // console.log(this.results);
+   this.mdbTable.setDataSource(this.results);
+   this.results = this.mdbTable.getDataSource();
    this.previous = this.mdbTable.getDataSource();
- }
+}
 
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(15);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
-  }
+ngAfterViewInit() {
+this.mdbTablePagination.setMaxVisibleItemsNumberTo(15);
+this.mdbTablePagination.calculateFirstItemIndex();
+this.mdbTablePagination.calculateLastItemIndex();
+this.cdRef.detectChanges();
+}
 }
