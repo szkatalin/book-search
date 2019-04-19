@@ -9,6 +9,7 @@ import {Book} from './book';
 export class RestApiService {
   // Define API
   apiURL = 'http://openlibrary.org/search.json';
+  favouritesURL = 'http://localhost:3000/favs';
 
   // Define fields
   results: Book[] = [];
@@ -17,6 +18,7 @@ export class RestApiService {
     this.results = [];
   }
 
+  // BOOK REST API
   search(term: string) {
     return new Promise((resolve, reject) => {
       const api = `${this.apiURL}?${term}`;
@@ -24,14 +26,6 @@ export class RestApiService {
         .toPromise()
         .then(
           (res: any) => {
-            // console.log(res.docs);
-            /*this.results = res.docs.map(item => {
-              return new Book(
-                item.author_name[0],
-                item.title,
-                item.first_publish_year
-              );
-            });*/
             resolve(res.docs);
           },
           msg => {
@@ -40,5 +34,30 @@ export class RestApiService {
         );
     });
   }
+
+  // FAKE BACKEND FOR FAVOURITES
+  fetchFavourites() {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.favouritesURL)
+        .toPromise()
+        .then(
+          (res: any) => {
+            resolve(res);
+          },
+          msg => {
+            reject(msg);
+          }
+        );
+    });
+  }
+
+  postFavourite(b: Book) {
+    // TODO
+  }
+
+  deleteFavourites(isbn: string) {
+    // TODO
+  }
+
 }
 

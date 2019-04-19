@@ -11,7 +11,7 @@ import {SearchItem} from '../SearchItem';
 })
 export class BooksSearchComponent implements OnInit, AfterViewInit {
   // Table
-  headElements = ['id', 'Author', 'Title', 'Published', 'Like'];
+  headElements = ['ISBN', 'Author', 'Title', 'Published', 'Like'];
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
 
@@ -29,11 +29,10 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
    const promise = this.restApi.search(input.searchTerm());
    await promise.then( (res: []) => {
      res.map((item: Book) => {
-       this.results.push(new Book(item.author_name, item.title, item.first_publish_year));
+       this.results.push(new Book(item.isbn, item.author_name, item.title, item.first_publish_year));
      });
      }
    );
-   // console.log(this.results);
    this.mdbTable.setDataSource(this.results);
    this.results = this.mdbTable.getDataSource();
    this.previous = this.mdbTable.getDataSource();
@@ -43,11 +42,10 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
     const promise = this.restApi.search(input);
     await promise.then( (res: []) => {
         res.map((item: Book) => {
-          this.results.push(new Book(item.author_name, item.title, item.first_publish_year));
+          this.results.push(new Book(item.isbn, item.author_name, item.title, item.first_publish_year));
         });
       }
     );
-    console.log(this.results);
     this.mdbTable.setDataSource(this.results);
     this.results = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();

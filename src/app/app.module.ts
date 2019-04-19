@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 // Components
 import { AppComponent } from './app.component';
 import { BooksSearchComponent } from './books-search/books-search.component';
-import { BookDetailsComponent } from './book-details/book-details.component';
 import { FavComponent } from './fav/fav.component';
 import { HomeComponent } from './home/home.component';
 
@@ -20,7 +19,6 @@ import {ReactiveFormsModule} from '@angular/forms';
   declarations: [
     AppComponent,
     BooksSearchComponent,
-    BookDetailsComponent,
     FavComponent,
     HomeComponent
   ],
