@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '
 import {RestApiService} from '../shared/rest-api.service';
 import {Book} from '../shared/book';
 import {SearchItem} from '../SearchItem';
+import {FavService} from '../shared/fav.service';
 
 @Component({
   selector: 'app-books-search',
@@ -20,7 +21,7 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
   results: Book[] = [];
   previous: any = [];
 
-  constructor(private cdRef: ChangeDetectorRef, public restApi: RestApiService) { }
+  constructor(private cdRef: ChangeDetectorRef, public restApi: RestApiService, public favService: FavService) { }
 
   ngOnInit() { }
 
@@ -33,12 +34,14 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
      });
      }
    );
+
+   // eredmények betöltése a táblázatba
    this.mdbTable.setDataSource(this.results);
    this.results = this.mdbTable.getDataSource();
    this.previous = this.mdbTable.getDataSource();
 }
 
-  async search(input: string) {
+async search(input: string) {
     const promise = this.restApi.search(input);
     await promise.then( (res: []) => {
         res.map((item: Book) => {
@@ -46,6 +49,8 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
         });
       }
     );
+
+    // eredmények betöltése a táblázatba
     this.mdbTable.setDataSource(this.results);
     this.results = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();

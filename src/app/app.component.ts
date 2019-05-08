@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {Book} from './shared/book';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +7,4 @@ import {Book} from './shared/book';
 })
 export class AppComponent {
   title = 'book-search';
-  favourites: Book[];
 }
