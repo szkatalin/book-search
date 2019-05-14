@@ -23,7 +23,7 @@ export class FavComponent implements OnInit {
 
   ngOnInit() {
     this.mdbTable.setDataSource(this.favService.getFavs());
-    // this.favs = this.mdbTable.getDataSource();
+    this.favs = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
   }
 

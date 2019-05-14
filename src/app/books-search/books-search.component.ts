@@ -2,7 +2,6 @@ import {MdbTableDirective, MdbTablePaginationComponent} from 'angular-bootstrap-
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {RestApiService} from '../shared/rest-api.service';
 import {Book} from '../shared/book';
-import {SearchItem} from '../SearchItem';
 import {FavService} from '../shared/fav.service';
 
 @Component({
@@ -17,7 +16,6 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
 
   // Search fields
-  searchItem: SearchItem = new SearchItem();
   results: Book[] = [];
   previous: any = [];
 
@@ -25,30 +23,12 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
 
   ngOnInit() { }
 
-  // Get books list
- async complexBookSearch(input: SearchItem) {
-   const promise = this.restApi.search(input.searchTerm());
-   await promise.then( (res: []) => {
-     res.map((item: Book) => {
-       this.results.push(new Book(item.isbn, item.author_name, item.title, item.first_publish_year));
-     });
-     }
-   );
-
-   // eredmények betöltése a táblázatba
-   this.mdbTable.setDataSource(this.results);
-   this.results = this.mdbTable.getDataSource();
-   this.previous = this.mdbTable.getDataSource();
-}
-
-async search(input: string) {
-    const promise = this.restApi.search(input);
-    await promise.then( (res: []) => {
-        res.map((item: Book) => {
-          this.results.push(new Book(item.isbn, item.author_name, item.title, item.first_publish_year));
-        });
-      }
-    );
+  async search(input: string) {
+    this.results = [];
+    const res: any = await this.restApi.search(input);
+    res.map((item) => {
+      this.results.push(new Book(item.isbn, item.author_name, item.title, item.first_publish_year));
+    });
 
     // eredmények betöltése a táblázatba
     this.mdbTable.setDataSource(this.results);
@@ -61,21 +41,5 @@ async search(input: string) {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
-  }
-
-  simpleSearch(value: string, s: string) {
-    this.results = [];
-    this.search(value + '=' + s.replace(/ /g, '+'));
-  }
-
-  complexSearch(k: string, a: string, t: string, i: string) {
-    this.results = [];
-
-    this.searchItem.keywords = k;
-    this.searchItem.author = a;
-    this.searchItem.title = t;
-    this.searchItem.isbn = i;
-
-    this.complexBookSearch(this.searchItem);
   }
 }

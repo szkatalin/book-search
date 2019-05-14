@@ -1,5 +1,3 @@
-import {HttpClient} from '@angular/common/http';
-
 export class Book {
   isbn: string;
   author_name: string;

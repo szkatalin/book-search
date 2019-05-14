@@ -22,10 +22,18 @@ export class FavService {
   }
 
   manageFavourites = (book: Book) => {
-    if (this.favs.findIndex(x => x.isbn === book.isbn && x.title === book.title && x.first_publish_year === book.first_publish_year) === -1) {
+    if (!this.contains(book)) {
       this.addFav(book);
     } else {
       this.deleteFav(book);
+    }
+  }
+
+  contains(b: Book): boolean {
+    if (this.favs.findIndex(x => x.isbn === b.isbn && x.title === b.title && x.first_publish_year === b.first_publish_year) === -1) {
+      return false;
+    } else {
+      return true;
     }
   }
 }

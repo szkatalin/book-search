@@ -18,7 +18,16 @@
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.author_name}}</td>
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.title}}</td>
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.first_publish_year}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><button (click)="this.favService.manageFavourites(el)">{{'❤️'}}</button></td>
+        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+          <button (click)="this.favService.manageFavourites(el)" style="background: transparent; border: transparent">
+            <div *ngIf="this.favService.contains(el)">
+              {{'❤️'}}
+            </div>
+            <div *ngIf="!this.favService.contains(el)">
+              {{'🖤'}}
+            </div>
+          </button>
+        </td>
       </tr>
       </tbody>
       <tfoot class="grey lighten-5 w-100">

@@ -23,8 +23,9 @@
       <div class="col-4"><input mdbInput type="text" class="form-control" #keywords_complex></div>
     </div>
     <div class="row" style="padding-top: 20px">
-      <div class="col-4"></div>
-      <div class="col-2"><button mdbBtn type="button" color="info" rounded="true" mdbWavesEffect style="border-radius: 20px" (click)="simpleSearch(option.value, simple_search.value)">Search</button></div>
+      <div class="col-6"><button (click)="search(option.value+'='+(simple_search.value.replace('/ /g','+')))" color="info" mdbBtn mdbWavesEffect rounded="true"
+                                 style="border-radius: 20px"
+                                 type="button">Search</button></div>
       <div class="col-2">Author</div>
       <div class="col-4"><input mdbInput type="text" class="form-control" #author></div>
     </div>
@@ -39,11 +40,15 @@
       <div class="col-4"><input mdbInput type="text" class="form-control" #isbn></div>
     </div>
     <div class="row" style="padding-top: 20px">
-      <div class="col-10"></div>
-      <div class="col-2"><button mdbBtn type="button"
+      <div class="col-6"></div>
+      <div class="col-6"><button mdbBtn type="button"
                                  color="info" rounded="true"
                                  mdbWavesEffect style="border-radius: 20px"
-                                 (click)="complexSearch(keywords_complex.value, author.value, title.value, isbn.value)">
+                                 (click)="search(  keywords_complex.value? 'q='+keywords_complex.value.replace('/ /g','+'):''+
+                                                    author.value? 'author='+author.value.replace('/ /g','+'):''+
+                                                    title.value? 'title='+title.value.replace('/ /g','+'):''+
+                                                    isbn.value? 'isbn='+isbn.value.replace('/ /g','+'):'')
+">
         Search</button></div>
     </div>
 
@@ -67,7 +72,16 @@
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.author_name}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.title}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.first_publish_year}}</td>
-      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><button (click)="this.favService.manageFavourites(el)">{{'❤️'}}</button></td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+        <button (click)="this.favService.manageFavourites(el)" style="background: transparent; border: transparent">
+          <div *ngIf="this.favService.contains(el)">
+            {{'❤️'}}
+          </div>
+          <div *ngIf="!this.favService.contains(el)">
+            {{'🖤'}}
+          </div>
+        </button>
+      </td>
     </tr>
     </tbody>
     <tfoot class="grey lighten-5 w-100">
