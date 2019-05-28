@@ -1,8 +1,12 @@
 # Book Search Application
 
 This project was made for one of classes homework.
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.PNG)
 
-## Development
-First you should install the packages with `npm install`, the you can run the application, with `ng serve`.
+## Technologies
+- Angular
+- Bootstrap
+
+## Launch
+First you should install the packages with `npm install`, then you can run the application, with `ng serve`.
 Navigate to `http://localhost:4200/`.
