@@ -8,7 +8,7 @@ import {Book} from './book';
 
 export class RestApiService {
   // Define API
-  apiURL = 'http://openlibrary.org/search.json';
+  apiURL = 'https://openlibrary.org/search.json';
 
   // Define fields
   results: Book[] = [];
