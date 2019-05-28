@@ -26,6 +26,7 @@ export class BooksSearchComponent implements OnInit, AfterViewInit {
   async search(input: string) {
     this.results = [];
     const res: any = await this.restApi.search(input);
+    console.log(res);
     res.map((item) => {
       this.results.push(new Book(item.isbn, item.author_name, item.title, item.first_publish_year));
     });
