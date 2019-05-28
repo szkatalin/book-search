@@ -13,6 +13,7 @@ export class RestApiService {
   // Define fields
   results: Book[] = [];
 
+  // HTTPClient
   constructor(private http: HttpClient) {
     this.results = [];
   }
