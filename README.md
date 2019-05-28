@@ -1,5 +1,5 @@
 # Book Search Application
-[![Netlify Status](https://api.netlify.com/api/v1/badges/97508424-a6fe-406b-9482-00f0cd163651/deploy-status)](https://app.netlify.com/sites/szkatalin-book-search/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/97508424-a6fe-406b-9482-00f0cd163651/deploy-status)](https://app.netlify.com/sites/szkatalin-book-search/deploys) </br>
 This project was made for one of classes homework.
 
 ## Preview
